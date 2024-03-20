@@ -1,17 +1,19 @@
 # FoodTruck 基于微服务的WEB API
 
 ## 功能说明：
-1、实现通过接口上传csv文件并解析入库
-2、实现多条件查询食品车数据
-3、实现根据位置编号查询食品车数据
+### 1、实现通过接口上传csv文件并解析入库
+### 2、实现多条件查询食品车数据
+### 3、实现根据位置编号查询食品车数据
+
+![img.png](img.png)
 
 ## 项目结构说明：
 
-###apigateway	API网关服务
+### apigateway	API网关服务
 
-###food-service	食品车管理服务
+### food-service	食品车管理服务
 
-###common-utils	公共工具类服务（jar）
+### common-utils	公共工具类服务（jar）
 
 ## 项目技术选型：
 ### 开发语言： JDK17
