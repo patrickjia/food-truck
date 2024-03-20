@@ -1,0 +1,51 @@
+server:
+  port: 8090
+  servlet:
+    context-path:
+    session:
+      timeout: 1m
+
+spring:
+  application:
+    name: api-gateway
+    # 设置请求文件大小
+  servlet:
+    multipart:
+      enabled: true # 启用上传处理，默认是true
+      file-size-threshold: 1MB   # 当上传文件达到1MB的时候进行磁盘写入
+      max-file-size: 50MB # 设置单个文件的最大长度
+      max-request-size: 50MB  # 设置最大的请求文件的大小
+
+  cache:
+    # 缓存类型
+    type: redis
+    redis:
+      # key 前缀
+      key-prefix: api-gateway
+      # 过期时间
+      time-to-live: 60s
+  data:
+    redis:
+      host: localhost
+      port: 23679
+      password: Keyrus-@2022
+      database: 0
+  cloud:
+    gateway:
+      routes:
+        - id: food-service
+          uri: http://localhost:8091
+          predicates:
+            - Path=/food/**
+          filters:
+            - StripPrefix=1
+
+
+route:
+  cart: http://food-service/
+thread:
+  size: 10
+  maxSize: 20
+  queueCapacity: 200
+access_control_allow_origin:
+  domain: https://localhost

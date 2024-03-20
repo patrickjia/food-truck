@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.patrick.food.mapper.IFoodTruckMapper">
+
+    <select id="queryList" resultType="com.patrick.food.domain.FoodTruck">
+        select location_id as locationId,applicant,facility_type as facilityType,location_description as locationDescription
+        ,address,status,food_items as foodItems,latitude,longitude,fire_prevention_districts as firePreventionDistricts,police_districts as policeDistricts
+        ,supervisor_districts as supervisorDistricts,zip_codes as zipCodes
+        from mobile_food_facility_permit mffp
+        <where>
+            <if test="status!=null and status!=''">
+                mffp.status = #{status}
+            </if>
+            <if test="applicant!=null and applicant!=''">
+               and  mffp.applicant = #{applicant}
+            </if>
+            <if test="facilityType!=null and facilityType!=''">
+               and mffp.facility_type = #{facilityType}
+            </if>
+            <if test="address!=null and address!=''">
+               and  mffp.address like concat('%',#{address},'%')
+            </if>
+            <if test="foodItems!=null and foodItems!=''">
+                and  mffp.food_items like concat('%',#{foodItems},'%')
+            </if>
+        </where>
+    </select>
+</mapper>

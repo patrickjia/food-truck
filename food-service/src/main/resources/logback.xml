@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+
+	<!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径 -->
+	<property name="LOG_HOME" value="applog/food" />
+	<appender name="service"
+		class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<Prudent>true</Prudent>
+		<File>${LOG_HOME}/food.log</File>
+		<encoder>
+			<pattern>[%X{trace_uuid}]%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %c %L - %msg%n</pattern>
+		</encoder>
+		<!--日志文件最大的大小-->
+        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
+            <MaxFileSize>100MB</MaxFileSize>
+        </triggeringPolicy>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<!--日志文件输出的文件名-->
+			<fileNamePattern>
+				${LOG_HOME}/food.log.%d{yyyy-MM-dd}
+			</fileNamePattern>
+			<!--日志文件保留天数-->
+            <MaxHistory>30</MaxHistory>
+		</rollingPolicy>
+	</appender>
+
+	<appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+		<Target>System.out</Target>
+		<encoder>
+			<pattern>[%X{trace_uuid}]%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %c %L - %msg%n</pattern>
+		</encoder>
+	</appender>
+
+	<logger name="service" level="info" additivity="false">
+		<appender-ref ref="service" />
+		<appender-ref ref="stdout" />
+	</logger>
+	<logger name="com.patrick.food.mapper" level="DEBUG"/>
+	<root level="info">
+		<appender-ref ref="stdout" />
+		<appender-ref ref="service" />
+	</root>
+
+</configuration>
