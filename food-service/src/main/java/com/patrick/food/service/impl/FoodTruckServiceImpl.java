@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * 食品车业务接口实现类
@@ -54,6 +55,11 @@ public class FoodTruckServiceImpl implements IFoodTruckService {
                 i++;
                 // 当 list 到达单批次最大数量后，执行保存数据操作，并清空list
                 if (i==SIZE){
+                    List<Long> locationIdList = foodTruckList.stream().map(f->f.getLocationId()).collect(Collectors.toList());
+                    String locationIdsAsString = locationIdList.stream()
+                            .map(Object::toString)
+                            .collect(Collectors.joining(","));
+                    foodTruckMapper.deleteByIds(locationIdsAsString);
                     foodTruckMapper.insertList(foodTruckList);
                     foodTruckList.clear();
                     i = 0;
@@ -61,6 +67,11 @@ public class FoodTruckServiceImpl implements IFoodTruckService {
             }
             // 跳出循环后，判断里面有没有数据 防止有数据遗漏
             if (CollectionUtils.isNotEmpty(foodTruckList)){
+                List<Long> locationIdList = foodTruckList.stream().map(f->f.getLocationId()).collect(Collectors.toList());
+                String locationIdsAsString = locationIdList.stream()
+                        .map(Object::toString)
+                        .collect(Collectors.joining(","));
+                foodTruckMapper.deleteByIds(locationIdsAsString);
                 foodTruckMapper.insertList(foodTruckList);
             }
             // 关闭流
