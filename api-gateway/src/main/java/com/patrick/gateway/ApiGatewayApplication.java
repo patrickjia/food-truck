@@ -12,4 +12,5 @@ public class ApiGatewayApplication {
         application.setWebApplicationType(WebApplicationType.REACTIVE);
         application.run(args);
     }
+
 }

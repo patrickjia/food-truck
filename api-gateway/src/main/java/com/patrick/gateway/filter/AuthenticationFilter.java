@@ -60,8 +60,6 @@ public class AuthenticationFilter implements GlobalFilter, Ordered {
         //设置响应安全头
         setSecurityResponseHeader(response);
 
-
-
         return chain.filter(exchange);
     }
 

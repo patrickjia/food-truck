@@ -1,9 +1,9 @@
 server:
   port: 8090
   servlet:
-    context-path:
     session:
       timeout: 1m
+    context-path:
 
 spring:
   application:
@@ -36,10 +36,11 @@ spring:
         - id: food-service
           uri: http://localhost:8091
           predicates:
-            - Path=/food/**
+            - Path=/fd/**
           filters:
             - StripPrefix=1
-
+# 可通过http://localhost:8090/fd/访问8091的接口
+# 如:http://localhost:8090/fd/food/truck/934719
 
 route:
   cart: http://food-service/
